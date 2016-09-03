@@ -1,0 +1,110 @@
+/*
+	Mixins 
+ */
+.a,#b{
+	color:red;
+}
+
+.mixin-class{
+	.a();
+}
+.mixin-id{
+	#b();
+	.mixin-not-show;
+}
+
+.mixin-not-show(){
+	background:white;
+}
+
+.foo(@bg: #f5f5f5;@color: #900){
+	background:@bg;
+	color:@color;
+}
+
+.unimportant{
+	.foo();
+}
+.important{
+	.foo() !important;
+}
+
+//Parametric Mixins
+.border-radius(@radius: 5px){
+	-webkit-border-radius:@radius;
+	-moz-border-radius:@radius;
+	border-radius:@radius;
+}
+#header{
+	.border-radius();
+}
+.button{
+	.border-radius(6px);
+}
+
+//Named Parameters
+.mixin(@color: black;@margin: 10px;@padding: 20px;){
+	color: @color;
+	margin: @margin;
+	padding: @padding;
+}
+.class1{
+	.mixin(@margin: 20px;@color: #333444);
+}
+.class2{
+	.mixin(#efca44;@padding: 40px;);
+}
+
+//Pattern-matching
+.mixin1(dark; @color){
+	color: darken(@color, 10%);
+}
+.mixin1(light; @color){
+	color: lighten(@color, 10%);
+}
+.mixin1(@_; @color){
+	display:block;
+}
+@switch: light;
+.class{
+	.mixin1(@switch;#888);
+}
+
+//Mixins as Function
+.average(@x,@y){
+	@average:((@x + @y) / 2);
+}
+div{
+	.average(16px, 50px);
+	padding:@average;
+}
+
+//Passing Rulesets to Mixins
+.desktop-and-old-ie(@rules){
+	@media screen and (min-width: 1200){@rules();}
+	html.lt-ie9 & {@rules();}
+}
+
+header{
+	backgound-color:blue;
+	.desktop-and-old-ie({
+		background-color:red;
+	});
+}
+
+//Mixin Guards
+.mixin2 (@a) when(lightness(@a) >= 50%){
+	backgound-color:black;
+}
+.mixin2 (@a) when(lightness(@a) < 50%){
+	background-color:white;
+}
+.mixin2(@a){
+	color:@a;
+}
+.class1{
+	.mixin2(#ddd);
+}
+.class2{
+	.mixin2(#555);
+}

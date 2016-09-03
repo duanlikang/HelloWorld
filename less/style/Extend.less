@@ -1,0 +1,28 @@
+/*
+	Extend
+ */
+nav ul {
+  &:extend(.inline);
+  background: blue;
+}
+.inline {
+  color: red;
+}
+
+.bucket{
+	tr{
+		color:blue;
+	}
+}
+.some-class:extend(.bucket tr){}
+
+.my-inline-block {
+  display: inline-block;
+  font-size: 0;
+}
+.thing1 {
+  &:extend(.my-inline-block);
+}
+.thing2 {
+  &:extend(.my-inline-block);
+}
